@@ -1,6 +1,7 @@
 package maniananana.chm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +24,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +33,23 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.SneakyThrows;
+import maniananana.chm.locationPoint.LocationPoint;
+import maniananana.chm.locationPoint.LocationPointRepository;
+import maniananana.chm.locationPoint.Storage;
+
 public class MainActivity extends AppCompatActivity {
+
+    EditText lat;
+    EditText lon;
+    Button submitBtn;
+    Storage storage = new Storage();
+    LocationPointRepository lpr = storage.getLocationPointRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +58,42 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Button showMapBtn = findViewById(R.id.showMapBtn);
+        Button addLocBtn = findViewById(R.id.addLocBtn);
+        submitBtn = findViewById(R.id.submitBtn);
+        lat = findViewById(R.id.inputLat);
+        lon = findViewById(R.id.inputLon);
+        lat.setVisibility(View.INVISIBLE);
+        lon.setVisibility(View.INVISIBLE);
+        submitBtn.setVisibility(View.INVISIBLE);
+        lpr.loadData(getApplicationContext());
 
         showMapBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent showMapIntent = new Intent(getApplicationContext(), HeatmapActivity.class);
                 startActivity(showMapIntent);
+            }
+        });
+
+        addLocBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                lat.setVisibility(View.VISIBLE);
+                lon.setVisibility(View.VISIBLE);
+                submitBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        submitBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                double num1 = Double.parseDouble(lat.getText().toString());
+                double num2 = Double.parseDouble(lon.getText().toString());
+                lpr.add(new LocationPoint(num1, num2));
+                lpr.saveData(getApplicationContext());
+                lat.setVisibility(View.INVISIBLE);
+                lon.setVisibility(View.INVISIBLE);
+                submitBtn.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -74,4 +120,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
