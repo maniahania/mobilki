@@ -56,7 +56,6 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     private List<WeightedLatLng> generateHeatMapData() {
         List<WeightedLatLng> data = new ArrayList<>();
         //test
-        locationPointRepository.add(new LocationPoint(50, 20));
         List<LatLng> latLngs = locationPointRepository.getPointsLatLng();
         for (LatLng it : latLngs) {
             WeightedLatLng weightedLatLng = new WeightedLatLng(it, DENSITY);
@@ -64,5 +63,4 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         }
         return data;
     }
-
 }
