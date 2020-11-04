@@ -1,44 +1,17 @@
 package maniananana.chm;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.TileOverlay;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.maps.android.heatmaps.HeatmapTileProvider;
-import com.google.maps.android.heatmaps.WeightedLatLng;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
-import lombok.SneakyThrows;
 import maniananana.chm.locationPoint.LocationPoint;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
@@ -47,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText lat;
     EditText lon;
-    Button submitBtn;
-    Storage storage = new Storage();
-    LocationPointRepository lpr = storage.getLocationPointRepository();
+    Button submitBtn, showMapBtn, addLocBtn, helpBtn;
+    TextView aboutTextView;
+    LocationPointRepository lpr = Storage.getLocationPointRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +30,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Button showMapBtn = findViewById(R.id.showMapBtn);
-        Button addLocBtn = findViewById(R.id.addLocBtn);
+        showMapBtn = findViewById(R.id.showMapBtn);
+        addLocBtn = findViewById(R.id.addLocBtn);
         submitBtn = findViewById(R.id.submitBtn);
+        helpBtn = findViewById(R.id.helpBtn);
         lat = findViewById(R.id.inputLat);
         lon = findViewById(R.id.inputLon);
-        lat.setVisibility(View.INVISIBLE);
-        lon.setVisibility(View.INVISIBLE);
-        submitBtn.setVisibility(View.INVISIBLE);
+        aboutTextView = findViewById(R.id.helpTextView);
         lpr.loadData(getApplicationContext());
 
-        showMapBtn.setOnClickListener(new View.OnClickListener(){
+        showMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent showMapIntent = new Intent(getApplicationContext(), HeatmapActivity.class);
@@ -75,25 +47,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addLocBtn.setOnClickListener(new View.OnClickListener(){
+        addLocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lat.setVisibility(View.VISIBLE);
-                lon.setVisibility(View.VISIBLE);
-                submitBtn.setVisibility(View.VISIBLE);
+                if (submitBtn.getVisibility() == View.VISIBLE) {
+                    lat.setVisibility(View.INVISIBLE);
+                    lon.setVisibility(View.INVISIBLE);
+                    submitBtn.setVisibility(View.INVISIBLE);
+                } else {
+                    lat.setVisibility(View.VISIBLE);
+                    lon.setVisibility(View.VISIBLE);
+                    submitBtn.setVisibility(View.VISIBLE);
+                }
             }
         });
 
-        submitBtn.setOnClickListener(new View.OnClickListener(){
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double num1 = Double.parseDouble(lat.getText().toString());
-                double num2 = Double.parseDouble(lon.getText().toString());
-                lpr.add(new LocationPoint(num1, num2));
-                lpr.saveData(getApplicationContext());
+                if (!lat.getText().toString().equals("") && !lon.getText().toString().equals("")) {
+                    double num1 = Double.parseDouble(lat.getText().toString());
+                    double num2 = Double.parseDouble(lon.getText().toString());
+                    lpr.add(new LocationPoint(num1, num2));
+                    lpr.saveData(getApplicationContext());
+                }
                 lat.setVisibility(View.INVISIBLE);
                 lon.setVisibility(View.INVISIBLE);
                 submitBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (aboutTextView.getVisibility() == View.VISIBLE) {
+                    aboutTextView.setVisibility(View.INVISIBLE);
+                } else {
+                    aboutTextView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

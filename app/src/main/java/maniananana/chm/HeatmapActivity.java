@@ -9,16 +9,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import maniananana.chm.locationPoint.LocationPoint;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
 
@@ -26,8 +23,7 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     private final static int RADIUS = 30;
     private final static double MAX_INTENSITY = 5000.0;
     private final static double DENSITY = 5000;
-    private Storage storage = new Storage();
-    private LocationPointRepository lpr = storage.getLocationPointRepository();
+    private final LocationPointRepository lpr = Storage.getLocationPointRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +44,10 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
                     .radius(RADIUS) // optional, in pixels, can be anything between 20 and 50
                     .maxIntensity(MAX_INTENSITY)
                     .build();
-            TileOverlay tileOverlay = googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(heatMapTileProvider));
+            googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(heatMapTileProvider));
         }
-        LatLng indiaLatLng = new LatLng(50, 20);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indiaLatLng, 10f));
+        LatLng lodzLatLng = new LatLng(51.47, 19.28);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lodzLatLng, 5f));
 
     }
 
