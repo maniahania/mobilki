@@ -5,12 +5,13 @@ import com.google.android.gms.maps.model.LatLng;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Data;
 
 @Data
-public class LocationPoint {
+public class LocationPoint implements Serializable {
 
     private UUID pointId;
     private double latitude;

@@ -14,27 +14,29 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import maniananana.chm.locationPoint.LocationPoint;
 import maniananana.chm.locationPoint.LocationPointRepository;
+import maniananana.chm.locationPoint.Storage;
 
 public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallback {
     private final static int RADIUS = 30;
     private final static double MAX_INTENSITY = 5000.0;
     private final static double DENSITY = 5000;
-    private LocationPointRepository locationPointRepository = new LocationPointRepository();
+    private Storage storage = new Storage();
+    private LocationPointRepository lpr = storage.getLocationPointRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heatmap);
-
+        lpr.loadData(getApplicationContext());
         MapFragment mapFragment = (MapFragment)
                 getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
     @Override
@@ -55,9 +57,7 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
 
     private List<WeightedLatLng> generateHeatMapData() {
         List<WeightedLatLng> data = new ArrayList<>();
-        //test
-        locationPointRepository.add(new LocationPoint(50, 20));
-        List<LatLng> latLngs = locationPointRepository.getPointsLatLng();
+        List<LatLng> latLngs = lpr.getPointsLatLng();
         for (LatLng it : latLngs) {
             WeightedLatLng weightedLatLng = new WeightedLatLng(it, DENSITY);
             data.add(weightedLatLng);
