@@ -32,10 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         showMapBtn = findViewById(R.id.showMapBtn);
         addLocBtn = findViewById(R.id.addLocBtn);
-        submitBtn = findViewById(R.id.submitBtn);
         helpBtn = findViewById(R.id.helpBtn);
-        lat = findViewById(R.id.inputLat);
-        lon = findViewById(R.id.inputLon);
         aboutTextView = findViewById(R.id.helpTextView);
         lpr.loadData(getApplicationContext());
 
@@ -50,30 +47,8 @@ public class MainActivity extends AppCompatActivity {
         addLocBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (submitBtn.getVisibility() == View.VISIBLE) {
-                    lat.setVisibility(View.INVISIBLE);
-                    lon.setVisibility(View.INVISIBLE);
-                    submitBtn.setVisibility(View.INVISIBLE);
-                } else {
-                    lat.setVisibility(View.VISIBLE);
-                    lon.setVisibility(View.VISIBLE);
-                    submitBtn.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!lat.getText().toString().equals("") && !lon.getText().toString().equals("")) {
-                    double num1 = Double.parseDouble(lat.getText().toString());
-                    double num2 = Double.parseDouble(lon.getText().toString());
-                    lpr.add(new LocationPoint(num1, num2));
-                    lpr.saveData(getApplicationContext());
-                }
-                lat.setVisibility(View.INVISIBLE);
-                lon.setVisibility(View.INVISIBLE);
-                submitBtn.setVisibility(View.INVISIBLE);
+                Intent addLocationIntent = new Intent(getApplicationContext(), AddLocationActivity.class);
+                startActivity(addLocationIntent);
             }
         });
 

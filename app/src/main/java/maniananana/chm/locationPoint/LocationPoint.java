@@ -14,12 +14,14 @@ import lombok.Data;
 public class LocationPoint implements Serializable {
 
     private UUID pointId;
+    private String name;
     private double latitude;
     private double longitude;
     private DateTime createDate;
 
-    public LocationPoint(double latitude, double longitude) {
+    public LocationPoint(String name, double latitude, double longitude) {
         this.pointId = UUID.randomUUID();
+        this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.createDate = DateTime.now();
