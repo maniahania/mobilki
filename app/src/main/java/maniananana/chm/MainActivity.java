@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import maniananana.chm.locationPoint.LocationPoint;
+import maniananana.chm.addLocation.AddLocationActivity;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
 

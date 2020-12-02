@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Covid-19 Heat Map</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -18,7 +17,7 @@
     <string name="name">Name</string>
     <string name="location_name">Location Name</string>
     <string name="textview">TextView</string>
-    <string name="warningName">Name must be 3–24 characters long.</string>
+    <string name="warningName">Name must be 3–60 characters long.</string>
     <string name="warningLatitude">Latitude must be from [-90, 90] range</string>
     <string name="warningLongitude">Longitude must be from [-180, 180] range</string>
     <string name="show_map">Show Map</string>
@@ -26,4 +25,8 @@
     <string name="points_on_the_map_show_the_areas_where_the_virus_is_present_n_npress_add_location_button_and_provide_latitude_and_longitude_to_add_new_location">Points on the map show the areas where the virus is present. \n\nPress \'Add Location\' button and provide latitude and longitude to add new location.</string>
     <string name="help">Help</string>
     <string name="warningEmpty">Fill all the required fields</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="confirm_location">Confirm Location</string>
+    <string name="change_location">Change Location</string>
+    <string name="confirm">Confirm</string>
 </resources>
