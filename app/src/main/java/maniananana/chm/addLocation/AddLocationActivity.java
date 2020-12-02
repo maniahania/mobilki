@@ -54,14 +54,14 @@ public class AddLocationActivity extends AppCompatActivity {
 
                 if (lon.getText().toString().equals("") || lat.getText().toString().equals("") || name.getText().toString().equals("")) {
                     warningText.setText(R.string.warningEmpty);
-                } else if (Double.parseDouble(lon.getText().toString()) < -180 || Double.parseDouble(lon.getText().toString()) > 180) {
+                } else if (Double.parseDouble(lon.getText().toString().replace(',', '.')) < -180 || Double.parseDouble(lon.getText().toString().replace(',', '.')) > 180) {
                     warningText.setText(R.string.warningLongitude);
-                } else if (Double.parseDouble(lat.getText().toString()) < -90 || Double.parseDouble(lat.getText().toString()) > 90) {
+                } else if (Double.parseDouble(lat.getText().toString().replace(',', '.')) < -90 || Double.parseDouble(lat.getText().toString().replace(',', '.')) > 90) {
                     warningText.setText(R.string.warningLatitude);
                 } else if (name.getText().toString().length() < 3 || name.getText().toString().length() > 60) {
                     warningText.setText(R.string.warningName);
                 } else {
-                    lpr.add(new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString()), Double.parseDouble(lon.getText().toString())));
+                    lpr.add(new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.'))));
                     lpr.saveData(getApplicationContext());
                     finish();
                 }
