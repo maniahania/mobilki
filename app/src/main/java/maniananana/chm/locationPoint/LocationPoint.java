@@ -25,7 +25,7 @@ public class LocationPoint implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "name='" + name + ", latitude=" + latitude + ", longitude=" + longitude + ", createDate=" + createDate.toString() ;
+        return "Name: " + name + ", Latitude: " + latitude + ", Longitude: " + longitude + ", Creation Date: " + createDate.toString() ;
     }
 
     public LocationPoint(String name, double latitude, double longitude, String creatorID) {

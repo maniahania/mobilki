@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.model.value.FieldValue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class LocationListActivity extends AppCompatActivity {
     TextView tv;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userID;
+    String userID, string;
     ArrayList<Object> list;
 
     @Override
@@ -52,14 +53,18 @@ public class LocationListActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         list = (ArrayList<Object>) document.get("Locations");
-                        tv.setText(list.toString());
+                        string = list.toString();
+                        String replace = string.replace("LocationPoint{", "");
+                        String replace1 = replace.replace("[","");
+                        String replace2 = replace1.replace("]","");
+                        String replace3 = replace2.replace("}","");
+                        tv.setText(replace3);
                     }
                 }
             }
         });
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
