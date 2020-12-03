@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "434523248232",
+    "firebase_url": "https://covid-19-heat-map-97854.firebaseio.com",
+    "project_id": "covid-19-heat-map-97854",
+    "storage_bucket": "covid-19-heat-map-97854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434523248232:android:88a59cf469ed09aeef0ddd",
+        "android_client_info": {
+          "package_name": "maniananana.chm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434523248232-bssbg2g8ktodujlpdfu5t5ici8d79hjc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8ZUeSPyRbfx6nn17yG9DTy1Ywugkzvx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434523248232-bssbg2g8ktodujlpdfu5t5ici8d79hjc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
