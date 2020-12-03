@@ -1,5 +1,7 @@
 package maniananana.chm.locationPoint;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
@@ -18,13 +20,21 @@ public class LocationPoint implements Serializable {
     private double latitude;
     private double longitude;
     private DateTime createDate;
+    private String creatorID;
 
-    public LocationPoint(String name, double latitude, double longitude) {
+    @NonNull
+    @Override
+    public String toString() {
+        return "name='" + name + ", latitude=" + latitude + ", longitude=" + longitude + ", createDate=" + createDate.toString() ;
+    }
+
+    public LocationPoint(String name, double latitude, double longitude, String creatorID) {
         this.pointId = UUID.randomUUID();
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.createDate = DateTime.now();
+        this.creatorID = creatorID;
     }
 
     public boolean isOutdated() {

@@ -29,4 +29,6 @@
     <string name="confirm_location">Confirm Location</string>
     <string name="change_location">Change Location</string>
     <string name="confirm">Confirm</string>
+    <string name="view_my_locations">View my locations</string>
+    <string name="go_back">Go Back</string>
 </resources>

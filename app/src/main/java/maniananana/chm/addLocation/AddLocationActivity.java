@@ -10,6 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.DecimalFormat;
 
 import maniananana.chm.R;
@@ -25,6 +30,9 @@ public class AddLocationActivity extends AppCompatActivity {
     EditText lat, lon, name;
     TextView warningText;
     int PLACE_PICKER_REQUEST = 1;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,9 @@ public class AddLocationActivity extends AppCompatActivity {
         lon = findViewById(R.id.pickLongitude);
         name = findViewById(R.id.pickName);
         warningText = findViewById(R.id.warningTextView);
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
 
         lpr.loadData(getApplicationContext());
 
@@ -61,8 +72,11 @@ public class AddLocationActivity extends AppCompatActivity {
                 } else if (name.getText().toString().length() < 3 || name.getText().toString().length() > 60) {
                     warningText.setText(R.string.warningName);
                 } else {
-                    lpr.add(new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.'))));
+                    DocumentReference df = fStore.collection("Users").document(userID);
+                    LocationPoint lp = new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.')), userID);
+                    lpr.add(lp);
                     lpr.saveData(getApplicationContext());
+                    df.update("Locations", FieldValue.arrayUnion(lp.toString()));
                     finish();
                 }
                 warningText.setVisibility(View.VISIBLE);

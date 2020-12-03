@@ -1,5 +1,8 @@
 package maniananana.chm;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,8 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import maniananana.chm.addLocation.AddLocationActivity;
 import maniananana.chm.locationPoint.LocationPointRepository;
@@ -18,9 +20,7 @@ import maniananana.chm.locationPoint.Storage;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText lat;
-    EditText lon;
-    Button submitBtn, showMapBtn, addLocBtn, helpBtn;
+    Button showMapBtn, addLocBtn, helpBtn, logOutBtn;
     TextView aboutTextView;
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         addLocBtn = findViewById(R.id.addLocBtn);
         helpBtn = findViewById(R.id.helpBtn);
         aboutTextView = findViewById(R.id.helpTextView);
+        logOutBtn = findViewById(R.id.logOutBtn);
         lpr.loadData(getApplicationContext());
 
         showMapBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
+
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,24 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_viewMyLocations) {
+            Intent listIntent = new Intent(getApplicationContext(), LocationListActivity.class);
+            startActivity(listIntent);
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }
