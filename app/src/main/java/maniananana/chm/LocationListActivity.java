@@ -54,10 +54,9 @@ public class LocationListActivity extends AppCompatActivity {
                     if (document.exists()) {
                         list = (ArrayList<Object>) document.get("Locations");
                         string = list.toString();
-                        String replace = string.replace("LocationPoint{", "");
-                        String replace1 = replace.replace("[","");
+                        String replace1 = string.replace("[","");
                         String replace2 = replace1.replace("]","");
-                        String replace3 = replace2.replace("}","");
+                        String replace3 = replace2.replace("Z,","\n");
                         tv.setText(replace3);
                     }
                 }
