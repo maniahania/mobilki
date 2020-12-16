@@ -11,11 +11,12 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 public class LocationPoint implements Serializable {
 
-    private UUID pointId;
+    private String pointId;
     private String name;
     private double latitude;
     private double longitude;
@@ -28,14 +29,25 @@ public class LocationPoint implements Serializable {
         return "Name: " + name + ", Latitude: " + latitude + ", Longitude: " + longitude + ", Creation Date: " + createDate.toString() ;
     }
 
+    public LocationPoint(String pointId, String name, double latitude, double longitude, DateTime date, String creatorID) {
+        this.pointId = pointId;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.createDate = date;
+        this.creatorID = creatorID;
+    }
+
     public LocationPoint(String name, double latitude, double longitude, String creatorID) {
-        this.pointId = UUID.randomUUID();
+        this.pointId = UUID.randomUUID().toString();
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.createDate = DateTime.now();
         this.creatorID = creatorID;
     }
+
+    public LocationPoint(){}
 
     public boolean isOutdated() {
         Duration duration = new Duration(createDate, DateTime.now());

@@ -29,7 +29,7 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heatmap);
-        lpr.loadData(getApplicationContext());
+        lpr.loadDataFromFirebase(getApplicationContext());
         MapFragment mapFragment = (MapFragment)
                 getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

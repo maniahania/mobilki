@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         helpBtn = findViewById(R.id.helpBtn);
         aboutTextView = findViewById(R.id.helpTextView);
         logOutBtn = findViewById(R.id.logOutBtn);
-        lpr.loadData(getApplicationContext());
+        lpr.loadDataFromFirebase(getApplicationContext());
 
         showMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override

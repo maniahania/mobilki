@@ -48,7 +48,7 @@ public class AddLocationActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
 
-        lpr.loadData(getApplicationContext());
+        lpr.loadDataFromFirebase(getApplicationContext());
 
         pickLocationBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -75,7 +75,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     DocumentReference df = fStore.collection("Users").document(userID);
                     LocationPoint lp = new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.')), userID);
                     lpr.add(lp);
-                    lpr.saveData(getApplicationContext());
+                    lpr.saveDataToFirebase(getApplicationContext());
                     df.update("Locations", FieldValue.arrayUnion(lp.toString()));
                     finish();
                 }
