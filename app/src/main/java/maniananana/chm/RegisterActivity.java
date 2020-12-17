@@ -1,14 +1,14 @@
 package maniananana.chm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText fullName,email,password,phone;
-    Button registerBtn,goToLogin;
+    EditText fullName, email, password, phone;
+    Button registerBtn, goToLogin;
     boolean valid = true;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -61,17 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
                 checkField(phone);
 
                 if (valid) {
-                    fAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    fAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             FirebaseUser user = fAuth.getCurrentUser();
                             Toast.makeText(RegisterActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
                             DocumentReference df = fStore.collection("Users").document(user.getUid());
-                            Map<String,Object> userInfo = new HashMap<>();
-                            userInfo.put("FullName",fullName.getText().toString());
+                            Map<String, Object> userInfo = new HashMap<>();
+                            userInfo.put("FullName", fullName.getText().toString());
                             userInfo.put("UserEmail", email.getText().toString());
                             userInfo.put("PhoneNumber", phone.getText().toString());
-                            userInfo.put("isAdmin","0");
+                            userInfo.put("isAdmin", "0");
                             userInfo.put("Locations", null);
                             df.set(userInfo);
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -88,11 +88,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void checkField(EditText textField){
-        if(textField.getText().toString().isEmpty()){
+    public void checkField(EditText textField) {
+        if (textField.getText().toString().isEmpty()) {
             textField.setError("Error");
             valid = false;
-        }else {
+        } else {
             valid = true;
         }
     }

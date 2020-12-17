@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class LocationPoint implements Serializable {
@@ -22,12 +21,6 @@ public class LocationPoint implements Serializable {
     private double longitude;
     private DateTime createDate;
     private String creatorID;
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Name: " + name + ", Latitude: " + latitude + ", Longitude: " + longitude + ", Creation Date: " + createDate.toString() ;
-    }
 
     public LocationPoint(String pointId, String name, double latitude, double longitude, DateTime date, String creatorID) {
         this.pointId = pointId;
@@ -47,7 +40,14 @@ public class LocationPoint implements Serializable {
         this.creatorID = creatorID;
     }
 
-    public LocationPoint(){}
+    public LocationPoint() {
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Latitude: " + latitude + ", Longitude: " + longitude + ", Creation Date: " + createDate.toString();
+    }
 
     public boolean isOutdated() {
         Duration duration = new Duration(createDate, DateTime.now());

@@ -1,7 +1,6 @@
 package maniananana.chm.locationPoint;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,26 +16,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.DateTime;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.UUID;
 
 import lombok.Data;
 
 @Data
-public class  LocationPointRepository implements Serializable {
+public class LocationPointRepository implements Serializable {
     private static final String FILE_NAME = "/data.txt";
     private List<LocationPoint> locationPoints = new ArrayList<>();
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("LocationPoints");
@@ -71,7 +58,7 @@ public class  LocationPointRepository implements Serializable {
 
     public LocationPoint find(String uuid) {
         for (LocationPoint it : locationPoints) {
-            if (it.getPointId() == uuid) {
+            if (it.getPointId().equals(uuid)) {
                 return it;
             }
         }
@@ -83,7 +70,7 @@ public class  LocationPointRepository implements Serializable {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(context, "List is uploaded successfully", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -95,7 +82,7 @@ public class  LocationPointRepository implements Serializable {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     locationPoints.clear();
                     for (DataSnapshot dss : snapshot.getChildren()) {
                         String pointId = dss.child("pointId").getValue(String.class);
@@ -104,8 +91,8 @@ public class  LocationPointRepository implements Serializable {
                         Double longitude = dss.child("longitude").getValue(Double.class);
                         DateTime date = dss.child("createdate").getValue(DateTime.class);
                         String creatorID = dss.child("creatorID").getValue(String.class);
-                        locationPoints.add(new LocationPoint(pointId,name,latitude,longitude,date,creatorID));
-                    };
+                        locationPoints.add(new LocationPoint(pointId, name, latitude, longitude, date, creatorID));
+                    }
                 }
             }
 

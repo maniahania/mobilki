@@ -1,32 +1,22 @@
 package maniananana.chm;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.model.value.FieldValue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 public class LocationListActivity extends AppCompatActivity {
 
@@ -53,10 +43,11 @@ public class LocationListActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         list = (ArrayList<Object>) document.get("Locations");
+                        assert list != null;
                         string = list.toString();
-                        String replace1 = string.replace("[","");
-                        String replace2 = replace1.replace("]","");
-                        String replace3 = replace2.replace("Z,","\n");
+                        String replace1 = string.replace("[", "");
+                        String replace2 = replace1.replace("]", "");
+                        String replace3 = replace2.replace("Z,", "\n");
                         tv.setText(replace3);
                     }
                 }

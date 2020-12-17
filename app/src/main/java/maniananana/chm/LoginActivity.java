@@ -1,8 +1,5 @@
 package maniananana.chm;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,8 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email,password;
-    Button loginBtn,gotoRegister;
+    EditText email, password;
+    Button loginBtn, gotoRegister;
     boolean valid = true;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     fAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(LoginActivity.this,"Logged in Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             checkIfAdmin(authResult.getUser().getUid());
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void checkField(EditText textField){
-        if(textField.getText().toString().isEmpty()){
+    public void checkField(EditText textField) {
+        if (textField.getText().toString().isEmpty()) {
             textField.setError("Error");
             valid = false;
-        }else {
+        } else {
             valid = true;
         }
     }
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
     }
@@ -92,10 +92,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Log.d("TAG", "onSuccess: " + documentSnapshot.getData());
-                if(documentSnapshot.getString("isAdmin") == "1"){
-                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                }
-                else {
+                if (documentSnapshot.getString("isAdmin").equals("1")) {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } else {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
             }
