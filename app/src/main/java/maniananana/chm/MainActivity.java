@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        requestPermissions();
         showMapBtn = findViewById(R.id.showMapBtn);
         addLocBtn = findViewById(R.id.addLocBtn);
         helpBtn = findViewById(R.id.helpBtn);
@@ -92,5 +93,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+        if (shouldProvideRationale) {
+            startLocationPermissionRequest();
+        } else {
+            startLocationPermissionRequest();
+        }
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                111);
     }
 }

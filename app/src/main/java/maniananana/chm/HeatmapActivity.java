@@ -44,20 +44,14 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_heatmap);
         lpr.loadDataFromFirebase(getApplicationContext());
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (checkPermissions()) {
+            getLastLocation();
+        }
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!checkPermissions()) {
-            requestPermissions();
-        } else {
-            getLastLocation();
-        }
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -70,6 +64,10 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
                     .maxIntensity(MAX_INTENSITY)
                     .build();
             googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(heatMapTileProvider));
+        }
+        if (mLastLocation != null) {
+            mGoogleMap.addMarker(new MarkerOptions().position(mLastLocation).title("My Location"));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLastLocation, 5f));
         }
     }
 
@@ -92,8 +90,6 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
                         if (task.isSuccessful() && task.getResult() != null) {
                             Location location = task.getResult();
                             mLastLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                            mGoogleMap.addMarker(new MarkerOptions().position(mLastLocation).title("My Location"));
-                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLastLocation, 5f));
                         }
                     }
                 });
@@ -103,22 +99,5 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         int permissionState = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermissions() {
-        boolean shouldProvideRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
-        if (shouldProvideRationale) {
-            startLocationPermissionRequest();
-        } else {
-            startLocationPermissionRequest();
-        }
-    }
-
-    private void startLocationPermissionRequest() {
-        ActivityCompat.requestPermissions(HeatmapActivity.this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                111);
     }
 }
