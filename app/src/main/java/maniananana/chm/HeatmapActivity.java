@@ -38,45 +38,34 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     private final static double MAX_INTENSITY = 5000.0;
     private final static double DENSITY = 5000;
     private final LocationPointRepository lpr = Storage.getLocationPointRepository();
-    private LatLng currentLocation = new LatLng(51.47, 19.28);
+    private LatLng mLastLocation;
     private GoogleMap mGoogleMap;
-    private FusedLocationProviderClient fusedLocationClient;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heatmap);
         lpr.loadDataFromFirebase(getApplicationContext());
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
     }
 
-    private void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                        }
-                    }
-                });
-        if (currentLocation != null) {
-            mGoogleMap.addMarker(new MarkerOptions().position(currentLocation).title("My Location"));
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 5f));
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            getLastLocation();
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        getCurrentLocation();
         List<WeightedLatLng> data = generateHeatMapData();
         if (!data.isEmpty()) {
             HeatmapTileProvider heatMapTileProvider = new HeatmapTileProvider.Builder()
@@ -96,5 +85,44 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
             data.add(weightedLatLng);
         }
         return data;
+    }
+
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            Location location = task.getResult();
+                            mLastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                            mGoogleMap.addMarker(new MarkerOptions().position(mLastLocation).title("My Location"));
+                            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLastLocation, 5f));
+                        }
+                    }
+                });
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+        if (shouldProvideRationale) {
+            startLocationPermissionRequest();
+        } else {
+            startLocationPermissionRequest();
+        }
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(HeatmapActivity.this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                111);
     }
 }
