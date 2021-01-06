@@ -1,13 +1,10 @@
 package maniananana.chm.locationlist;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,13 +20,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 import maniananana.chm.MainActivity;
 import maniananana.chm.R;
-import maniananana.chm.locationPoint.LocationPoint;
 
 public class LocationListActivity extends AppCompatActivity {
 
@@ -94,7 +87,7 @@ public class LocationListActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(strings,ids,userID,this);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(strings, ids, userID, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

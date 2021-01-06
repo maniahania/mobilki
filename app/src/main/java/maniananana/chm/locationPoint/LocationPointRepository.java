@@ -1,13 +1,10 @@
 package maniananana.chm.locationPoint;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +20,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class  LocationPointRepository implements Serializable {
+public class LocationPointRepository implements Serializable {
     private List<LocationPoint> locationPoints = new ArrayList<>();
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("LocationPoints");
 
@@ -64,6 +61,14 @@ public class  LocationPointRepository implements Serializable {
         return null;
     }
 
+    public void deleteOutdatedPoints() {
+        for (LocationPoint it : locationPoints) {
+            if (it.isOutdated()) {
+                delete(it);
+            }
+        }
+    }
+
     public void saveDataToFirebase(final Context context) {
         reference.setValue(locationPoints);
     }
@@ -73,7 +78,7 @@ public class  LocationPointRepository implements Serializable {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     locationPoints.clear();
                     for (DataSnapshot dss : snapshot.getChildren()) {
                         String pointId = dss.child("pointId").getValue(String.class);
@@ -82,8 +87,8 @@ public class  LocationPointRepository implements Serializable {
                         Double longitude = dss.child("longitude").getValue(Double.class);
                         DateTime date = dss.child("createdate").getValue(DateTime.class);
                         String creatorID = dss.child("creatorID").getValue(String.class);
-                        locationPoints.add(new LocationPoint(pointId,name,latitude,longitude,date,creatorID));
-                    };
+                        locationPoints.add(new LocationPoint(pointId, name, latitude, longitude, date, creatorID));
+                    }
                 }
             }
 

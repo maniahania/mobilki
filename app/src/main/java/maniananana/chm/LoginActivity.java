@@ -56,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             Toast.makeText(LoginActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            checkIfAdmin(authResult.getUser().getUid());
+                            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(mainIntent);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -84,27 +85,5 @@ public class LoginActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-    }
-
-    private void checkIfAdmin(String uid) {
-        DocumentReference df = fStore.collection("Users").document(uid);
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                Bundle bundle = new Bundle();
-                Log.d("TAG", "onSuccess: " + documentSnapshot.getData());
-                if (documentSnapshot.getString("isAdmin").equals("1")) {
-                    bundle.putBoolean("isAdmin", true);
-                    mainIntent.putExtras(bundle);
-                    startActivity(mainIntent);
-                } else {
-
-                    bundle.putBoolean("isAdmin", false);
-                    mainIntent.putExtras(bundle);
-                    startActivity(mainIntent);
-                }
-            }
-        });
     }
 }

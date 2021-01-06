@@ -6,7 +6,7 @@
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".HeatmapActivity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".locationlist.LocationListActivity" />
         <activity android:name=".LoginActivity">
@@ -30,7 +29,7 @@
         <activity android:name=".addLocation.PickLocationFromMapActivity" />
         <activity android:name=".addLocation.AddLocationActivity" />
         <activity
-            android:name=".UsersHeatmapActivity"
+            android:name=".HeatmapActivity"
             android:label="@string/title_activity_heatmap"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

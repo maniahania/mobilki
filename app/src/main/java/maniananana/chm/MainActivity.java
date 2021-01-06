@@ -1,6 +1,7 @@
 package maniananana.chm;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import maniananana.chm.addLocation.AddLocationActivity;
@@ -22,8 +26,9 @@ import maniananana.chm.locationlist.LocationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    Button showUserHeatMapBtn, showHeatMapBtn, addLocBtn, helpBtn, logOutBtn, updateDbBtn;
+    Button showHeatMapBtn, addLocBtn, helpBtn, logOutBtn, updateDbBtn;
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
     @Override
@@ -33,26 +38,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         requestPermissions();
-        showUserHeatMapBtn = findViewById(R.id.showUserHeatMapBtn);
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
         showHeatMapBtn = findViewById(R.id.showHeatMapBtn);
         addLocBtn = findViewById(R.id.addLocBtn);
         helpBtn = findViewById(R.id.helpBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
         updateDbBtn = findViewById(R.id.updateDbBtn);
+        checkIfAdmin(fAuth.getCurrentUser().getUid());
         lpr.loadDataFromFirebase(getApplicationContext());
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            updateDbBtn.setVisibility(bundle.getBoolean("isAdmin") ? View.VISIBLE : View.INVISIBLE);
-        }
-
-        showUserHeatMapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent showMapIntent = new Intent(getApplicationContext(), UsersHeatmapActivity.class);
-                startActivity(showMapIntent);
-            }
-        });
 
         showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
         updateDbBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                lpr.deleteOutdatedPoints();
+                lpr.saveDataToFirebase(getApplicationContext());
             }
         });
     }
@@ -129,6 +124,20 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 111);
+    }
+
+    private void checkIfAdmin(String uid) {
+        DocumentReference df = fStore.collection("Users").document(uid);
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.getString("isAdmin").equals("1")) {
+                    updateDbBtn.setVisibility(View.VISIBLE);
+                } else {
+                    updateDbBtn.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
 }
