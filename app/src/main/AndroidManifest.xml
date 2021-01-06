@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+        <activity android:name=".HeatmapActivity" />
+        <activity android:name=".HelpActivity" />
         <activity android:name=".locationlist.LocationListActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -28,7 +30,7 @@
         <activity android:name=".addLocation.PickLocationFromMapActivity" />
         <activity android:name=".addLocation.AddLocationActivity" />
         <activity
-            android:name=".HeatmapActivity"
+            android:name=".UsersHeatmapActivity"
             android:label="@string/title_activity_heatmap"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

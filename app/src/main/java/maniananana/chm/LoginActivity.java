@@ -91,11 +91,18 @@ public class LoginActivity extends AppCompatActivity {
         df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Bundle bundle = new Bundle();
                 Log.d("TAG", "onSuccess: " + documentSnapshot.getData());
                 if (documentSnapshot.getString("isAdmin").equals("1")) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    bundle.putBoolean("isAdmin", true);
+                    mainIntent.putExtras(bundle);
+                    startActivity(mainIntent);
                 } else {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                    bundle.putBoolean("isAdmin", false);
+                    mainIntent.putExtras(bundle);
+                    startActivity(mainIntent);
                 }
             }
         });

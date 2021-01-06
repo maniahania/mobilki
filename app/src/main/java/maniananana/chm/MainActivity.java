@@ -7,13 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import maniananana.chm.addLocation.AddLocationActivity;
 import maniananana.chm.locationPoint.LocationPointRepository;
@@ -22,8 +22,8 @@ import maniananana.chm.locationlist.LocationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button showMapBtn, addLocBtn, helpBtn, logOutBtn;
-    TextView aboutTextView;
+    FirebaseFirestore fStore;
+    Button showUserHeatMapBtn, showHeatMapBtn, addLocBtn, helpBtn, logOutBtn, updateDbBtn;
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
     @Override
@@ -33,14 +33,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         requestPermissions();
-        showMapBtn = findViewById(R.id.showMapBtn);
+        showUserHeatMapBtn = findViewById(R.id.showUserHeatMapBtn);
+        showHeatMapBtn = findViewById(R.id.showHeatMapBtn);
         addLocBtn = findViewById(R.id.addLocBtn);
         helpBtn = findViewById(R.id.helpBtn);
-        aboutTextView = findViewById(R.id.helpTextView);
         logOutBtn = findViewById(R.id.logOutBtn);
+        updateDbBtn = findViewById(R.id.updateDbBtn);
         lpr.loadDataFromFirebase(getApplicationContext());
 
-        showMapBtn.setOnClickListener(new View.OnClickListener() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            updateDbBtn.setVisibility(bundle.getBoolean("isAdmin") ? View.VISIBLE : View.INVISIBLE);
+        }
+
+        showUserHeatMapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showMapIntent = new Intent(getApplicationContext(), UsersHeatmapActivity.class);
+                startActivity(showMapIntent);
+            }
+        });
+
+        showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent showMapIntent = new Intent(getApplicationContext(), HeatmapActivity.class);
@@ -68,11 +82,15 @@ public class MainActivity extends AppCompatActivity {
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (aboutTextView.getVisibility() == View.VISIBLE) {
-                    aboutTextView.setVisibility(View.INVISIBLE);
-                } else {
-                    aboutTextView.setVisibility(View.VISIBLE);
-                }
+                Intent showHelpPageIntent = new Intent(getApplicationContext(), HelpActivity.class);
+                startActivity(showHelpPageIntent);
+            }
+        });
+
+        updateDbBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -112,4 +130,5 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 111);
     }
+
 }

@@ -32,4 +32,8 @@
     <string name="view_my_locations">View my locations</string>
     <string name="go_back">Go Back</string>
     <string name="delete">DELETE</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="show_heatmap">SHOW HEATMAP</string>
+    <string name="show_users_heatmap">SHOW USERS\' HEATMAP</string>
+    <string name="delete_outdated_points">DELETE OUTDATED POINTS</string>
 </resources>

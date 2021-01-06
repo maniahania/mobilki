@@ -36,7 +36,7 @@ public class PickLocationFromMapActivity extends AppCompatActivity implements On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_location_from_map);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.usersMap);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
