@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import maniananana.chm.addLocation.AddLocationActivity;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
+import maniananana.chm.locationlist.LocationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 

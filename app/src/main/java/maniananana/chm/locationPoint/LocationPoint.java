@@ -40,13 +40,10 @@ public class LocationPoint implements Serializable {
         this.creatorID = creatorID;
     }
 
-    public LocationPoint() {
-    }
-
     @NonNull
     @Override
     public String toString() {
-        return "Name: " + name + ", Latitude: " + latitude + ", Longitude: " + longitude + ", Creation Date: " + createDate.toString();
+        return name + "!!!!!" + pointId;
     }
 
     public boolean isOutdated() {

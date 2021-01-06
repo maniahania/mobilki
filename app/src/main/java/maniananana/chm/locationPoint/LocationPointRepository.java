@@ -23,8 +23,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class LocationPointRepository implements Serializable {
-    private static final String FILE_NAME = "/data.txt";
+public class  LocationPointRepository implements Serializable {
     private List<LocationPoint> locationPoints = new ArrayList<>();
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("LocationPoints");
 
@@ -66,15 +65,7 @@ public class LocationPointRepository implements Serializable {
     }
 
     public void saveDataToFirebase(final Context context) {
-        reference.setValue(locationPoints)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "List is uploaded successfully", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+        reference.setValue(locationPoints);
     }
 
     public void loadDataFromFirebase(final Context context) {
@@ -82,7 +73,7 @@ public class LocationPointRepository implements Serializable {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if(snapshot.exists()){
                     locationPoints.clear();
                     for (DataSnapshot dss : snapshot.getChildren()) {
                         String pointId = dss.child("pointId").getValue(String.class);
@@ -91,8 +82,8 @@ public class LocationPointRepository implements Serializable {
                         Double longitude = dss.child("longitude").getValue(Double.class);
                         DateTime date = dss.child("createdate").getValue(DateTime.class);
                         String creatorID = dss.child("creatorID").getValue(String.class);
-                        locationPoints.add(new LocationPoint(pointId, name, latitude, longitude, date, creatorID));
-                    }
+                        locationPoints.add(new LocationPoint(pointId,name,latitude,longitude,date,creatorID));
+                    };
                 }
             }
 
