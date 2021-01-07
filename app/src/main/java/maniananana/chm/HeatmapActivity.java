@@ -35,7 +35,6 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     private final static double DENSITY = 5000;
     private final LocationPointRepository lpr = Storage.getLocationPointRepository();
     private LatLng mLastLocation;
-    private GoogleMap mGoogleMap;
     private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
@@ -46,16 +45,15 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (checkPermissions()) {
             getLastLocation();
+        } else {
+            loadMap();
         }
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.usersMap);
-        mapFragment.getMapAsync(this);
 
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mGoogleMap = googleMap;
         List<WeightedLatLng> data = generateHeatMapData();
         if (!data.isEmpty()) {
             HeatmapTileProvider heatMapTileProvider = new HeatmapTileProvider.Builder()
@@ -63,11 +61,10 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
                     .radius(RADIUS)
                     .maxIntensity(MAX_INTENSITY)
                     .build();
+            if (mLastLocation != null) {
+                googleMap.addMarker(new MarkerOptions().position(mLastLocation).title("My Location"));
+            }
             googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(heatMapTileProvider));
-        }
-        if (mLastLocation != null) {
-            mGoogleMap.addMarker(new MarkerOptions().position(mLastLocation).title("My Location"));
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLastLocation, 5f));
         }
     }
 
@@ -90,6 +87,7 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
                         if (task.isSuccessful() && task.getResult() != null) {
                             Location location = task.getResult();
                             mLastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                            loadMap();
                         }
                     }
                 });
@@ -99,5 +97,10 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         int permissionState = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void loadMap() {
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.usersMap);
+        mapFragment.getMapAsync(this);
     }
 }

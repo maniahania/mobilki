@@ -36,4 +36,5 @@
     <string name="show_heatmap">SHOW HEATMAP</string>
     <string name="show_users_heatmap">SHOW USERS\' HEATMAP</string>
     <string name="delete_outdated_points">DELETE OUTDATED POINTS</string>
+    <string name="main_menu_logo">Main menu logo</string>
 </resources>
