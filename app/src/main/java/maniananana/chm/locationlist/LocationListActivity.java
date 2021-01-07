@@ -20,11 +20,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Objects;
 
-import maniananana.chm.UserInfo;
-import maniananana.chm.UserLocation;
 import maniananana.chm.MainActivity;
 import maniananana.chm.R;
+import maniananana.chm.UserInfo;
+import maniananana.chm.UserLocation;
 
 public class LocationListActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class LocationListActivity extends AppCompatActivity {
     List<UserLocation> list;
     UserInfo userInfo;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class LocationListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        userID = fAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
         fStore.collection("Users").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -51,7 +53,8 @@ public class LocationListActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         userInfo = document.toObject(UserInfo.class);
-                        list = (List<UserLocation>) userInfo.getLocations();
+                        assert userInfo != null;
+                        list = userInfo.getLocations();
                         initRecyclerView();
                     }
                 }
@@ -80,7 +83,7 @@ public class LocationListActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list,userID,this);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list, userID, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

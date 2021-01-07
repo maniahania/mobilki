@@ -1,6 +1,7 @@
 package maniananana.chm.addLocation;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,9 +18,10 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
-import maniananana.chm.UserLocation;
 import maniananana.chm.R;
+import maniananana.chm.UserLocation;
 import maniananana.chm.locationPoint.LocationPoint;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
@@ -36,6 +39,7 @@ public class AddLocationActivity extends AppCompatActivity {
     String userID;
     UserLocation userLocation;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +52,7 @@ public class AddLocationActivity extends AppCompatActivity {
         warningText = findViewById(R.id.warningTextView);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        userID = fAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
         userLocation = new UserLocation();
 
         lpr.loadDataFromFirebase(getApplicationContext());

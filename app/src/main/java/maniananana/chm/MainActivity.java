@@ -1,7 +1,6 @@
 package maniananana.chm;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -134,9 +133,10 @@ public class MainActivity extends AppCompatActivity {
     private void checkIfAdmin(String uid) {
         DocumentReference df = fStore.collection("Users").document(uid);
         df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.getString("isAdmin").equals("1")) {
+                if (Objects.equals(documentSnapshot.getString("isAdmin"), "1")) {
                     updateDbBtn.setVisibility(View.VISIBLE);
                 } else {
                     updateDbBtn.setVisibility(View.INVISIBLE);

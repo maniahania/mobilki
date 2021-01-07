@@ -17,12 +17,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-import maniananana.chm.UserLocation;
 import maniananana.chm.R;
+import maniananana.chm.UserLocation;
 import maniananana.chm.locationPoint.LocationPointRepository;
 import maniananana.chm.locationPoint.Storage;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<UserLocation> userLocationList;
     private String userID;
@@ -40,8 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_location_list_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return userLocationList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
         Button button;

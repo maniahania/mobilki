@@ -17,43 +17,43 @@ public class UserInfo {
         this.isAdmin = isAdmin;
     }
 
-    public UserInfo() {}
+    public UserInfo() {
+    }
 
     public List<UserLocation> getLocations() {
         return Locations;
-    }
-
-
-    public String getFullName() {
-        return FullName;
-    }
-
-    public String getPhoneNumber() {
-        return PhoneNumber;
-    }
-
-    public String getUserEmail() {
-        return UserEmail;
-    }
-
-    public String getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setFullName(String fullName) {
-        FullName = fullName;
     }
 
     public void setLocations(List<UserLocation> locations) {
         Locations = locations;
     }
 
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 
+    public String getUserEmail() {
+        return UserEmail;
+    }
+
     public void setUserEmail(String userEmail) {
         UserEmail = userEmail;
+    }
+
+    public String getIsAdmin() {
+        return isAdmin;
     }
 
     public void setIsAdmin(String isAdmin) {

@@ -12,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
