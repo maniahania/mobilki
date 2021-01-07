@@ -24,16 +24,14 @@ import maniananana.chm.locationPoint.Storage;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<UserLocation> userLocationList;
-    private String userID;
-    private Context mContext;
-    private LocationPointRepository lpr = Storage.getLocationPointRepository();
+    private final List<UserLocation> userLocationList;
+    private final String userID;
+    private final LocationPointRepository lpr = Storage.getLocationPointRepository();
     private FirebaseFirestore fStore;
 
-    public RecyclerViewAdapter(List<UserLocation> userLocationList, String userID, Context mContext) {
+    public RecyclerViewAdapter(List<UserLocation> userLocationList, String userID) {
         this.userLocationList = userLocationList;
         this.userID = userID;
-        this.mContext = mContext;
     }
 
     @NonNull
@@ -46,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         fStore = FirebaseFirestore.getInstance();
-        lpr.loadDataFromFirebase(mContext);
+        lpr.loadDataFromFirebase();
         holder.textView.setText(userLocationList.get(position).getName());
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 DocumentReference df = fStore.collection("Users").document(userID);
                 df.update("Locations", FieldValue.arrayRemove(userLocationList.get(position)));
                 lpr.delete(userLocationList.get(position).getId());
-                lpr.saveDataToFirebase(mContext);
+                lpr.saveDataToFirebase();
                 userLocationList.remove(userLocationList.get(position));
                 notifyDataSetChanged();
             }
@@ -66,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return userLocationList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
         Button button;

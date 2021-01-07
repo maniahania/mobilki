@@ -1,6 +1,7 @@
 package maniananana.chm;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -40,14 +41,13 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heatmap);
-        lpr.loadDataFromFirebase(getApplicationContext());
+        lpr.loadDataFromFirebase();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (checkPermissions()) {
             getLastLocation();
         } else {
             loadMap();
         }
-
     }
 
 
@@ -77,7 +77,7 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
         return data;
     }
 
-    @SuppressWarnings("MissingPermission")
+    @SuppressLint("MissingPermission")
     private void getLastLocation() {
         mFusedLocationClient.getLastLocation()
                 .addOnCompleteListener(this, new OnCompleteListener<Location>() {
@@ -93,9 +93,8 @@ public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private boolean checkPermissions() {
-        int permissionState = ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
     private void loadMap() {

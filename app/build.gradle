@@ -15,7 +15,7 @@ android {
         resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
 
         applicationId "maniananana.chm"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
         versionCode 1
@@ -36,7 +36,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.5'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

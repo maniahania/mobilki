@@ -35,7 +35,6 @@ public class LocationListActivity extends AppCompatActivity {
     List<UserLocation> list;
     UserInfo userInfo;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +82,7 @@ public class LocationListActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list, userID, this);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list, userID);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

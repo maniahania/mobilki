@@ -39,7 +39,6 @@ public class AddLocationActivity extends AppCompatActivity {
     String userID;
     UserLocation userLocation;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class AddLocationActivity extends AppCompatActivity {
         userID = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
         userLocation = new UserLocation();
 
-        lpr.loadDataFromFirebase(getApplicationContext());
+        lpr.loadDataFromFirebase();
 
         pickLocationBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -82,7 +81,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     DocumentReference df = fStore.collection("Users").document(userID);
                     LocationPoint lp = new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.')), userID);
                     lpr.add(lp);
-                    lpr.saveDataToFirebase(getApplicationContext());
+                    lpr.saveDataToFirebase();
                     userLocation.setName(lp.getName());
                     userLocation.setId(lp.getPointId());
                     df.update("Locations", FieldValue.arrayUnion(userLocation));

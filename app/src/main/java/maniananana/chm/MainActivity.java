@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     Button showHeatMapBtn, addLocBtn, helpBtn, logOutBtn, updateDbBtn;
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         logOutBtn = findViewById(R.id.logOutBtn);
         updateDbBtn = findViewById(R.id.updateDbBtn);
         checkIfAdmin(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
-        lpr.loadDataFromFirebase(getApplicationContext());
+        lpr.loadDataFromFirebase();
 
         showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 lpr.deleteOutdatedPoints();
-                lpr.saveDataToFirebase(getApplicationContext());
+                lpr.saveDataToFirebase();
             }
         });
     }

@@ -11,8 +11,10 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class LocationPoint implements Serializable {
 
     private String pointId;
@@ -38,9 +40,6 @@ public class LocationPoint implements Serializable {
         this.longitude = longitude;
         this.createDate = DateTime.now();
         this.creatorID = creatorID;
-    }
-
-    public LocationPoint() {
     }
 
 

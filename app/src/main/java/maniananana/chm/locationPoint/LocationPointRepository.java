@@ -28,14 +28,6 @@ public class LocationPointRepository implements Serializable {
         locationPoints.add(locationPoint);
     }
 
-    public List<String> getPointsIds() {
-        List<String> uuids = new ArrayList<>();
-        for (LocationPoint it : locationPoints) {
-            uuids.add(it.getPointId());
-        }
-        return uuids;
-    }
-
     public List<LatLng> getPointsLatLng() {
         List<LatLng> latLngs = new ArrayList<>();
         for (LocationPoint it : locationPoints) {
@@ -69,11 +61,11 @@ public class LocationPointRepository implements Serializable {
         }
     }
 
-    public void saveDataToFirebase(final Context context) {
+    public void saveDataToFirebase() {
         reference.setValue(locationPoints);
     }
 
-    public void loadDataFromFirebase(final Context context) {
+    public void loadDataFromFirebase() {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -87,7 +79,9 @@ public class LocationPointRepository implements Serializable {
                         Double longitude = dss.child("longitude").getValue(Double.class);
                         DateTime date = dss.child("createdate").getValue(DateTime.class);
                         String creatorID = dss.child("creatorID").getValue(String.class);
-                        locationPoints.add(new LocationPoint(pointId, name, latitude, longitude, date, creatorID));
+                        if (longitude != null && latitude != null) {
+                            locationPoints.add(new LocationPoint(pointId, name, latitude, longitude, date, creatorID));
+                        }
                     }
                 }
             }
