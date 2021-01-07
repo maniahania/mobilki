@@ -7,5 +7,4 @@ public class Storage {
     public static LocationPointRepository getLocationPointRepository() {
         return locationPointRepository;
     }
-
 }

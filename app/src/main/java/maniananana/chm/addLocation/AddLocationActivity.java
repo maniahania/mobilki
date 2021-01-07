@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 
+import maniananana.chm.UserLocation;
 import maniananana.chm.R;
 import maniananana.chm.locationPoint.LocationPoint;
 import maniananana.chm.locationPoint.LocationPointRepository;
@@ -33,6 +34,7 @@ public class AddLocationActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
+    UserLocation userLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class AddLocationActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
+        userLocation = new UserLocation();
 
         lpr.loadDataFromFirebase(getApplicationContext());
 
@@ -76,7 +79,9 @@ public class AddLocationActivity extends AppCompatActivity {
                     LocationPoint lp = new LocationPoint(name.getText().toString(), Double.parseDouble(lat.getText().toString().replace(',', '.')), Double.parseDouble(lon.getText().toString().replace(',', '.')), userID);
                     lpr.add(lp);
                     lpr.saveDataToFirebase(getApplicationContext());
-                    df.update("Locations", FieldValue.arrayUnion(lp.toString()));
+                    userLocation.setName(lp.getName());
+                    userLocation.setId(lp.getPointId());
+                    df.update("Locations", FieldValue.arrayUnion(userLocation));
                     finish();
                 }
                 warningText.setVisibility(View.VISIBLE);

@@ -19,8 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import maniananana.chm.UserInfo;
+import maniananana.chm.UserLocation;
 import maniananana.chm.MainActivity;
 import maniananana.chm.R;
 
@@ -29,8 +31,8 @@ public class LocationListActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    ArrayList<Object> list;
-    ArrayList<String> strings, ids;
+    List<UserLocation> list;
+    UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +50,8 @@ public class LocationListActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        list = (ArrayList<Object>) document.get("Locations");
-                        assert list != null;
-                        strings = new ArrayList<>(list.size());
-                        ids = new ArrayList<>(list.size());
-                        for (Object object : list) {
-                            String[] things = object.toString().split("!!!!!");
-                            String name = things[0];
-                            String id = things[1];
-                            strings.add(name);
-                            ids.add(id);
-                        }
+                        userInfo = document.toObject(UserInfo.class);
+                        list = (List<UserLocation>) userInfo.getLocations();
                         initRecyclerView();
                     }
                 }
@@ -87,7 +80,7 @@ public class LocationListActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(strings, ids, userID, this);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(list,userID,this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

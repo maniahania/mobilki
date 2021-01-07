@@ -6,14 +6,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-
 import java.io.Serializable;
 import java.util.UUID;
 
 import lombok.Data;
 
 @Data
-public class LocationPoint implements Serializable {
+public class LocationPoint  implements Serializable{
 
     private String pointId;
     private String name;
@@ -40,6 +39,9 @@ public class LocationPoint implements Serializable {
         this.creatorID = creatorID;
     }
 
+    public LocationPoint (){}
+
+
     @NonNull
     @Override
     public String toString() {
@@ -54,4 +56,5 @@ public class LocationPoint implements Serializable {
     public LatLng getLatLng() {
         return new LatLng(latitude, longitude);
     }
+
 }
