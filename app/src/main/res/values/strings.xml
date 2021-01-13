@@ -37,4 +37,8 @@
     <string name="show_users_heatmap">SHOW USERS\' HEATMAP</string>
     <string name="delete_outdated_points">DELETE OUTDATED POINTS</string>
     <string name="main_menu_logo">Main menu logo</string>
+    <string name="show_my_locations">SHOW MY LOCATIONS</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
 </resources>

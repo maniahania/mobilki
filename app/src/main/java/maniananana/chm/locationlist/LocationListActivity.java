@@ -35,6 +35,7 @@ public class LocationListActivity extends AppCompatActivity {
     List<UserLocation> list;
     UserInfo userInfo;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,10 @@ public class LocationListActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         userInfo = document.toObject(UserInfo.class);
-                        assert userInfo != null;
-                        list = userInfo.getLocations();
-                        initRecyclerView();
+                        if (userInfo.getLocations() != null) {
+                            list = userInfo.getLocations();
+                            initRecyclerView();
+                        }
                     }
                 }
             }
@@ -70,14 +72,7 @@ public class LocationListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_goBack) {
-            Intent listIntent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(listIntent);
-        }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void initRecyclerView() {

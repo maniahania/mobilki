@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:id="@+id/parent_layout">
+    android:background="#242525"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:text="@string/delete"
-        android:layout_toRightOf="@id/textView"
+        android:background="#242525"
+        android:layout_marginStart="10dp"
+        android:drawableLeft="@mipmap/trash_foreground"
+        android:layout_marginLeft="10dp"
         android:layout_toEndOf="@id/textView"
-        android:layout_marginStart="20dp" />
+        android:layout_toRightOf="@id/textView"/>
 
 </RelativeLayout>

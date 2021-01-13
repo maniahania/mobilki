@@ -1,13 +1,16 @@
 package maniananana.chm;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    Button showHeatMapBtn, addLocBtn, helpBtn, logOutBtn, updateDbBtn;
+    ImageButton showHeatMapBtn, addLocBtn, helpBtn, listBtn;
+    Button logOutBtn, updateDbBtn;
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
     @Override
@@ -45,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         showHeatMapBtn = findViewById(R.id.showHeatMapBtn);
         addLocBtn = findViewById(R.id.addLocBtn);
+        listBtn = findViewById(R.id.listBtn);
         helpBtn = findViewById(R.id.helpBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
         updateDbBtn = findViewById(R.id.updateDbBtn);
-        checkIfAdmin(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
+        checkIfAdmin(fAuth.getCurrentUser().getUid());
         lpr.loadDataFromFirebase();
 
         showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addLocationIntent = new Intent(getApplicationContext(), AddLocationActivity.class);
                 startActivity(addLocationIntent);
+            }
+        });
+
+        listBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showLocationsIntent = new Intent(getApplicationContext(), LocationListActivity.class);
+                startActivity(showLocationsIntent);
             }
         });
 
@@ -102,14 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_viewMyLocations) {
-            Intent listIntent = new Intent(getApplicationContext(), LocationListActivity.class);
-            startActivity(listIntent);
-        }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void requestPermissions() {

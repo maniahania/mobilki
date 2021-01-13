@@ -4,58 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#242525"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <Button
-        android:id="@+id/showHeatMapBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/show_heatmap"
-        app:layout_constraintBottom_toTopOf="@+id/addLocBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/addLocBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/add_location"
-        app:layout_constraintBottom_toTopOf="@+id/helpBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/helpBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/help"
-        app:layout_constraintBottom_toTopOf="@+id/logOutBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/logOutBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/log_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/updateDbBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/delete_outdated_points"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/mainMenuLogoView"
@@ -64,8 +14,124 @@
         android:contentDescription="@string/main_menu_logo"
         app:layout_constraintBottom_toTopOf="@+id/showHeatMapBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateDbBtn"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageButton
+        android:id="@+id/showHeatMapBtn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/round_button"
+        android:src="@mipmap/map_foreground"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/listBtn"
+        app:layout_constraintEnd_toStartOf="@+id/addLocBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuLogoView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:text="Map"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showHeatMapBtn" />
+
+    <ImageButton
+        android:id="@+id/addLocBtn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/addlocation_foreground"
+        android:background="@drawable/round_button"
+        app:layout_constraintBottom_toTopOf="@+id/helpBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuLogoView"
+        app:layout_constraintStart_toEndOf="@id/showHeatMapBtn" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="76dp"
+        android:text="Add location"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addLocBtn" />
+
+    <ImageButton
+        android:id="@+id/listBtn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/round_button"
+        android:src="@mipmap/mylocations_foreground"
+        app:layout_constraintBottom_toTopOf="@id/logOutBtn"
+        app:layout_constraintEnd_toStartOf="@+id/helpBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showHeatMapBtn" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:text="My locations"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listBtn" />
+
+    <ImageButton
+        android:id="@+id/helpBtn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/round_button"
+        android:src="@mipmap/help_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/logOutBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/listBtn"
+        app:layout_constraintTop_toBottomOf="@id/addLocBtn" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="104dp"
+        android:text="Help"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/helpBtn" />
+
+    <Button
+        android:id="@+id/logOutBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_logout"
+        android:text="log out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/helpBtn" />
+
+    <Button
+        android:id="@+id/updateDbBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_logout"
+        android:text="delete outdated"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listBtn" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

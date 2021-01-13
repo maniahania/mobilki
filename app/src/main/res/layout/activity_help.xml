@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#242525"
     tools:context=".HelpActivity">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_marginBottom="424dp"
         android:gravity="center"
         android:text="@string/points_on_the_map_show_the_areas_where_the_virus_is_present_n_npress_add_location_button_and_provide_latitude_and_longitude_to_add_new_location"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

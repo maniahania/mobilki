@@ -2,8 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="maniananana.chm.MainActivity">
-    <item
-        android:id="@+id/action_viewMyLocations"
-        android:title="@string/view_my_locations"
-        app:showAsAction="never" />
 </menu>

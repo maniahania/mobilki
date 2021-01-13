@@ -3,9 +3,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="maniananana.chm.locationlist.LocationListActivity">
-    <item
-        android:id="@+id/action_goBack"
-        android:title="@string/go_back"
-        app:showAsAction="never" />
 
 </menu>

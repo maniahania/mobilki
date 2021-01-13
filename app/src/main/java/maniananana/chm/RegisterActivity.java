@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +24,9 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText fullName, email, password, phone;
-    Button registerBtn, goToLogin;
+    EditText fullName, email, password;
+    TextView goToLogin;
+    Button registerBtn;
     boolean valid = true;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -36,9 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         fullName = findViewById(R.id.registerName);
         email = findViewById(R.id.registerEmail);
         password = findViewById(R.id.registerPassword);
-        phone = findViewById(R.id.registerPhone);
         registerBtn = findViewById(R.id.registerBtn);
-        goToLogin = findViewById(R.id.gotoLogin);
+        goToLogin = findViewById(R.id.signIn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -55,10 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                checkField(fullName);
-                checkField(email);
-                checkField(password);
-                checkField(phone);
+                checkField(fullName,"Incorrect name");
+                checkField(email, "Email not valid");
+                checkField(password, "Password too short");
 
                 if (valid) {
                     fAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -70,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Map<String, Object> userInfo = new HashMap<>();
                             userInfo.put("FullName", fullName.getText().toString());
                             userInfo.put("UserEmail", email.getText().toString());
-                            userInfo.put("PhoneNumber", phone.getText().toString());
                             userInfo.put("isAdmin", "0");
                             userInfo.put("Locations", null);
                             df.set(userInfo);
@@ -80,7 +79,10 @@ public class RegisterActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(RegisterActivity.this, "Failed to Create Account", Toast.LENGTH_SHORT).show();
+                            if (password.getText().length() < 6)
+                                Toast.makeText(RegisterActivity.this, "Password needs to be over 6 characters", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(RegisterActivity.this, "Use a valid email", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -88,9 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void checkField(EditText textField) {
+    public void checkField(EditText textField, String message) {
         if (textField.getText().toString().isEmpty()) {
-            textField.setError("Error");
+            textField.setError(message);
             valid = false;
         } else {
             valid = true;

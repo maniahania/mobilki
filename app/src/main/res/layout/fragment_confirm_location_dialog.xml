@@ -2,61 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242525"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_height="match_parent">
+    android:padding="10dp">
 
     <TextView
+        android:id="@+id/confirmationQuestionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/confirm_location"
-        android:textColor="#000"
-        android:textSize="18sp"
-        android:id="@+id/confirmationQuestionTextView" />
+        android:textColor="#FFF"
+        android:textSize="18sp" />
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/confirm_location"
         android:id="@+id/pickedAddressTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_location"
 
-        />
+        android:textColor="#FFFFFF" />
 
     <fragment
+        android:id="@+id/confirmMapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:id="@+id/confirmMapFragment"
-        android:layout_marginTop="20dp"
         android:layout_height="150dp"
+        android:layout_marginTop="20dp"
         tools:ignore="FragmentTagUsage" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="30dp"
         android:gravity="end"
+        android:orientation="horizontal"
 
         >
 
         <Button
+            android:id="@+id/changeBtn"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/change_location"
-            android:textColor="#000"
-            android:layout_marginRight="20dp"
-            android:id="@+id/changeBtn"
             android:layout_marginEnd="20dp"
-            style="?android:attr/borderlessButtonStyle" />
+            android:layout_marginRight="20dp"
+            android:text="@string/change_location"
+            android:textColor="#000" />
 
         <Button
+            android:id="@+id/selectBtn"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/confirm"
-            android:textColor="#000"
-            android:id="@+id/selectBtn"
-            style="?android:attr/borderlessButtonStyle" />
+            android:textColor="#000" />
 
     </LinearLayout>
 
