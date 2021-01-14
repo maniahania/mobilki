@@ -1,17 +1,25 @@
 package maniananana.chm.addLocation;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -30,7 +38,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
     LocationPointRepository lpr = Storage.getLocationPointRepository();
 
-    Button submitBtn, pickLocationBtn;
+    Button submitBtn, pickLocationBtn, currentLocationBtn;
     EditText lat, lon, name;
     TextView warningText;
     int PLACE_PICKER_REQUEST = 1;
@@ -38,6 +46,7 @@ public class AddLocationActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userID;
     UserLocation userLocation;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class AddLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_location);
         pickLocationBtn = findViewById(R.id.pickLocationBtn);
         submitBtn = findViewById(R.id.submitBtn);
+        currentLocationBtn = findViewById(R.id.currentLocationBtn);
         lat = findViewById(R.id.pickLatitude);
         lon = findViewById(R.id.pickLongitude);
         name = findViewById(R.id.pickName);
@@ -55,6 +65,9 @@ public class AddLocationActivity extends AppCompatActivity {
         userLocation = new UserLocation();
 
         lpr.loadDataFromFirebase();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        currentLocationBtn.setEnabled(checkPermissions());
 
         pickLocationBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -90,6 +103,13 @@ public class AddLocationActivity extends AppCompatActivity {
                 warningText.setVisibility(View.VISIBLE);
             }
         });
+
+        currentLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLastLocation();
+            }
+        });
     }
 
     @Override
@@ -105,5 +125,27 @@ public class AddLocationActivity extends AppCompatActivity {
                 name.setText(data.getStringExtra("name"));
             }
         }
+    }
+
+    private boolean checkPermissions() {
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            Location location = task.getResult();
+                            lat.setText(new DecimalFormat("##.####").format(location.getLatitude()));
+                            lon.setText(new DecimalFormat("##.####").format(location.getLongitude()));
+                            name.setText("My Location");
+                        }
+                    }
+                });
     }
 }
