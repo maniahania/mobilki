@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,22 +9,24 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
         android:layout_centerVertical="true"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:background="#242525"
-        android:layout_marginStart="10dp"
-        android:drawableLeft="@mipmap/trash_foreground"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@id/textView"
-        android:layout_toRightOf="@id/textView"/>
+        android:src="@mipmap/trash_foreground"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
