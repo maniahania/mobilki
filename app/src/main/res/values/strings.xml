@@ -22,7 +22,8 @@
     <string name="warningLongitude">Longitude must be from [-180, 180] range</string>
     <string name="show_map">Show Map</string>
     <string name="add_location">Add Location</string>
-    <string name="points_on_the_map_show_the_areas_where_the_virus_is_present_n_npress_add_location_button_and_provide_latitude_and_longitude_to_add_new_location">Points on the map show the areas where the virus is present. \n\nPress \'Add Location\' button and provide latitude and longitude to add new location.</string>
+    <string name="help_text">Map - Opens a map with points showing places where there is a risk of infection with the Covid-19.\n\nAdd Location - Provide longitude, latitude and name of the location you want to add to the map. You can also pick location from a map using \'Pick Location\' button or choose your current location wit \'Current Location\' button.\n\nMy locations - Displays a list of locations added by you. Click on the trash bin to delete the point from the map.\n\nHelp - Displays this page.\n\nDelete points - Button available only for admins. When pressed all points older than 14 days are deleted from the map.\n\nLog out - Logs you out.
+    </string>
     <string name="help">Help</string>
     <string name="warningEmpty">Fill all the required fields</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
