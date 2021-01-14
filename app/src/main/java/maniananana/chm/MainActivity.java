@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         requestPermissions();
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         helpBtn = findViewById(R.id.helpBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
         updateDbBtn = findViewById(R.id.updateDbBtn);
-        checkIfAdmin(fAuth.getCurrentUser().getUid());
+        checkIfAdmin(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
         lpr.loadDataFromFirebase();
 
         showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +139,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (Objects.equals(documentSnapshot.getString("isAdmin"), "1")) {
-                    updateDbBtn.setVisibility(View.VISIBLE);
-                } else {
-                    updateDbBtn.setVisibility(View.INVISIBLE);
-                }
+                updateDbBtn.setEnabled(Objects.equals(documentSnapshot.getString("isAdmin"), "1"));
             }
         });
     }

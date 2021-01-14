@@ -35,7 +35,7 @@
     <string name="log_out">LOG OUT</string>
     <string name="show_heatmap">SHOW HEATMAP</string>
     <string name="show_users_heatmap">SHOW USERS\' HEATMAP</string>
-    <string name="delete_outdated_points">DELETE OUTDATED POINTS</string>
+    <string name="delete_outdated">DELETE OUTDATED</string>
     <string name="main_menu_logo">Main menu logo</string>
     <string name="show_my_locations">SHOW MY LOCATIONS</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -45,4 +45,10 @@
     <string name="log_in">LOG IN</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
+    <string name="map">Map</string>
+    <string name="my_locations">My locations</string>
+    <string name="map_image">Map Image</string>
+    <string name="add_location_image">Add Location Image</string>
+    <string name="my_locations_image">My Locations Image</string>
+    <string name="help_image">Help Image</string>
 </resources>

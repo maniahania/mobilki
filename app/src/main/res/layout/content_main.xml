@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242525"
@@ -24,8 +23,9 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/round_button"
-        android:src="@mipmap/map_foreground"
+        android:contentDescription="@string/map_image"
         android:gravity="center"
+        android:src="@mipmap/map_foreground"
         app:layout_constraintBottom_toTopOf="@id/listBtn"
         app:layout_constraintEnd_toStartOf="@+id/addLocBtn"
         app:layout_constraintHorizontal_bias="1.0"
@@ -33,14 +33,14 @@
         app:layout_constraintTop_toBottomOf="@id/mainMenuLogoView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/MapLabel"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Map"
+        android:text="@string/map"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/listBtn"
-        app:layout_constraintEnd_toStartOf="@id/textView3"
+        app:layout_constraintEnd_toStartOf="@id/AddLocationLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/showHeatMapBtn"
         app:layout_constraintVertical_bias="0.0" />
@@ -49,24 +49,25 @@
         android:id="@+id/addLocBtn"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@mipmap/addlocation_foreground"
         android:background="@drawable/round_button"
+        android:contentDescription="@string/add_location_image"
+        android:src="@mipmap/addlocation_foreground"
         app:layout_constraintBottom_toTopOf="@+id/helpBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@id/mainMenuLogoView"
-        app:layout_constraintStart_toEndOf="@id/showHeatMapBtn" />
+        app:layout_constraintStart_toEndOf="@id/showHeatMapBtn"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuLogoView" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/AddLocationLabel"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Add location"
+        android:text="@string/add_location"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/helpBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textView2"
+        app:layout_constraintStart_toEndOf="@id/MapLabel"
         app:layout_constraintTop_toBottomOf="@id/addLocBtn"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -75,6 +76,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/round_button"
+        android:contentDescription="@string/my_locations_image"
         android:src="@mipmap/mylocations_foreground"
         app:layout_constraintBottom_toTopOf="@id/logOutBtn"
         app:layout_constraintEnd_toStartOf="@+id/helpBtn"
@@ -83,14 +85,14 @@
         app:layout_constraintTop_toBottomOf="@id/showHeatMapBtn" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/MyLocationsLabel"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="My locations"
+        android:text="@string/my_locations"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/updateDbBtn"
-        app:layout_constraintEnd_toStartOf="@id/textView5"
+        app:layout_constraintEnd_toStartOf="@id/HelpLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listBtn"
         app:layout_constraintVertical_bias="0.0" />
@@ -100,6 +102,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/round_button"
+        android:contentDescription="@string/help_image"
         android:src="@mipmap/help_foreground"
         app:layout_constraintBottom_toTopOf="@+id/logOutBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,15 +111,15 @@
         app:layout_constraintTop_toBottomOf="@id/addLocBtn" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/HelpLabel"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Help"
+        android:text="@string/help"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/logOutBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textView4"
+        app:layout_constraintStart_toEndOf="@id/MyLocationsLabel"
         app:layout_constraintTop_toBottomOf="@id/helpBtn"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -125,7 +128,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:background="@drawable/rounded_logout"
-        android:text="log out"
+        android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
@@ -137,10 +140,10 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:background="@drawable/rounded_logout"
-        android:text="delete outdated"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/delete_outdated"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listBtn" />
