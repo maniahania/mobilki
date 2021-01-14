@@ -41,4 +41,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="log_in">LOG IN</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

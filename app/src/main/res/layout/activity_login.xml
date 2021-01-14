@@ -49,13 +49,14 @@
                 android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#dbdbdb"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
             <EditText
                 android:id="@+id/loginPassword"
@@ -67,13 +68,14 @@
                 android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#dbdbdb"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/loginEmail"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/loginBtn"
@@ -83,7 +85,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_button"
-                android:text="LOG IN"
+                android:text="@string/log_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +98,7 @@
         android:id="@+id/haveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account?"
+        android:text="@string/don_t_have_an_account"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,8 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="84dp"
-        android:layout_marginRight="84dp"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:clickable="true"
@@ -121,19 +122,21 @@
         app:layout_constraintLeft_toRightOf="@id/haveAccount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.182"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/haveAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/haveAccount"
+        android:focusable="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>
