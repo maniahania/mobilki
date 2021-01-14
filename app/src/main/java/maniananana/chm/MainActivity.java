@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         requestPermissions();
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         helpBtn = findViewById(R.id.helpBtn);
         logOutBtn = findViewById(R.id.logOutBtn);
         updateDbBtn = findViewById(R.id.updateDbBtn);
-        checkIfAdmin(Objects.requireNonNull(fAuth.getCurrentUser()).getUid());
+        checkIfAdmin(fAuth.getCurrentUser().getUid());
         lpr.loadDataFromFirebase();
 
         showHeatMapBtn.setOnClickListener(new View.OnClickListener() {
