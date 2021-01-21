@@ -32,7 +32,7 @@ import maniananana.chm.locationPoint.Storage;
 public class HeatmapActivity extends FragmentActivity implements OnMapReadyCallback {
     private final static int RADIUS = 30;
     private final static double MAX_INTENSITY = 5000.0;
-    private final static double DENSITY = 5000;
+    private final static double DENSITY = 1000;
     private final LocationPointRepository lpr = Storage.getLocationPointRepository();
     private LatLng mLastLocation;
     private FusedLocationProviderClient mFusedLocationClient;
